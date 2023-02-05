@@ -1,0 +1,62 @@
+[
+  {
+    "foodId": 0,
+    "quantity": 1,
+    "image": "http://placehold.it/32x32",
+    "food": "Francis Bowen",
+    "foodCategory": "male",
+    "text": "LOCAZONE",
+    "measure": "Dakota Place",
+    "weight": 14.087668
+  },
+  {
+    "foodId": 1,
+    "quantity": 2,
+    "image": "http://placehold.it/32x32",
+    "food": "Aimee Robertson",
+    "foodCategory": "female",
+    "text": "BULLZONE",
+    "measure": "Seigel Court",
+    "weight": 25.694852
+  },
+  {
+    "foodId": 2,
+    "quantity": 3,
+    "image": "http://placehold.it/32x32",
+    "food": "England Hamilton",
+    "foodCategory": "male",
+    "text": "NSPIRE",
+    "measure": "Colonial Road",
+    "weight": 12.292832
+  },
+  {
+    "foodId": 3,
+    "quantity": 4,
+    "image": "http://placehold.it/32x32",
+    "food": "Lucille Oneal",
+    "foodCategory": "female",
+    "text": "BUZZMAKER",
+    "measure": "Throop Avenue",
+    "weight": 86.957818
+  },
+  {
+    "foodId": 4,
+    "quantity": 5,
+    "image": "http://placehold.it/32x32",
+    "food": "Emerson Hall",
+    "foodCategory": "male",
+    "text": "BOILICON",
+    "measure": "Falmouth Street",
+    "weight": 26.00699
+  },
+  {
+    "foodId": 5,
+    "quantity": 6,
+    "image": "http://placehold.it/32x32",
+    "food": "Whitney Fry",
+    "foodCategory": "male",
+    "text": "APEXTRI",
+    "measure": "Baughman Place",
+    "weight": 42.294512
+  }
+]

@@ -9,6 +9,7 @@
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
 
 const ESLintPlugin = require("eslint-webpack-plugin");
+require("dotenv").config().parsed;
 
 const { configure } = require("quasar/wrappers");
 
@@ -65,7 +66,11 @@ module.exports = configure(function (ctx) {
 
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-
+      env: {
+        // You have to manually define all the variables you want to pass in
+        env: require("dotenv").config().parsed,
+        // ...
+      },
       chainWebpack(chain) {
         chain
           .plugin("eslint-webpack-plugin")

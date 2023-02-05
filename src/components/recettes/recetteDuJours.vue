@@ -1,117 +1,79 @@
 <template>
   <div class="column q-my-md items-center">
-    <span class="text-h5">Plats du jours</span>
-    <q-separator
-      spaced
-      inset
-      size="5px"
-      class="rounded-borders q-ma-none"
-      style="width: 25%"
-    />
+    <span class="text-h5">Recettes du jours</span>
+    <q-separator spaced inset size="5px" class="rounded-borders q-ma-none" style="width: 25%" />
   </div>
 
+  <div class="text-center text-h6 text-indigo-10 q-my-md" @click="showListCategorie"
+    style="text-decoration: underline;">Voir Plus</div>
   <div class="row no-wrap q-gutter-lg justify-center">
-    <!-- <q-card
-        v-for="n in 10"
-        :key="n"
-        class="my-card col-4"
-        flat
-        bordered
-        style="width: 400px"
-      >
-        <q-card-section horizontal>
-          <q-img class="col" src="https://cdn.quasar.dev/img/mountains.jpg" />
-
-          <q-card-actions vertical class="justify-around q-px-md">
-            <q-btn flat round color="red" icon="favorite" />
-            <q-btn flat round color="accent" icon="bookmark" />
-            <q-btn flat round color="primary" icon="share" />
-          </q-card-actions>
-        </q-card-section>
-      </q-card> -->
-
-    <div class="" v-for="n in 2" :key="n" style="width: 150px">
-      <q-img
-        src="../../assets/pexels-nataliya-vaitkevich-5792329.jpg"
-        class="rounded-borders"
-        @click="showListCategorie"
-        height="150px"
-      >
-        <div class="absolute-bottom text-subtitle1 text-center">Caption</div>
+    <div class="text-center" v-for="item in dataRecipie" :key="item.id" @click="showDetail(item)" style="width: 150px">
+      <q-img :src="item.recipe.image" class="rounded-borders" height="150px">
+        <div class="absolute-bottom text-subtitle1 text-center">{{ item.recipe.label }}</div>
       </q-img>
+      <div class="text-indigo-10">Voir details</div>
+      <q-dialog v-model="show" persistent full-width transition-show="slide-left" transition-hide="slide-right">
+        <q-card>
+          <detail-modal :RecipieDetail="detailRecipie" />
+        </q-card>
+      </q-dialog>
     </div>
   </div>
-  <!-- <q-dialog v-model="show" seamless position="bottom" class="z-top" style="">
-    <q-card style="width: 350px; border-radius: 25px 25px 0px 0px">
-      <div class="row justify-center">
-        <q-separator
-          spaced
-          inset
-          size="10px"
-          class="rounded-borders"
-          style="width: 50%"
-          @click="show = !show"
-        />
-      </div>
 
-      <q-card-section class="row items-center no-wrap">
-        <q-card-section class="col">
-          <div v-for="n in 3" :key="n">
-            <div class="text-weight-bold">The Walker</div>
-            <div class="text-grey">Fitz & The Tantrums</div>
-          </div>
-        </q-card-section>
-
-        <q-card-section class="col-4">
-          <q-img
-            src="../../assets/pexels-nataliya-vaitkevich-5792329.jpg"
-            spinner-color="primary"
-            spinner-size="82px"
-            fit="cover"
-            width="100%"
-            height="90px"
-            class="rounded-borders"
-            position="0% 80%"
-          />
-        </q-card-section>
-      </q-card-section>
-    </q-card>
-  </q-dialog> -->
 </template>
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, ref } from "vue";
+import { api } from "src/boot/axios";
+import { defineComponent, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import detailModal from '../detailModal.vue'
 export default defineComponent({
   // name: 'ComponentName',
+  components: {
+    detailModal
+  },
   setup() {
     const $q = useQuasar();
     let show = ref(false);
 
+
     const router = useRouter();
-    const info = ref(null);
-    let handlePan = ({ evt, ...newInfo }) => {
-      info.value = newInfo;
-      info.value.touch = show;
-      console.log("info", info.value);
-      // native Javascript event
-      console.log(evt);
-      // if (newInfo.isFirst) {
-      //   panning.value = true;
-      // } else if (newInfo.isFinal) {
-      //   panning.value = false;
-      // }
-    };
+    let dataRecipie = ref([]);
+    let detailRecipie = ref()
+    onMounted(async () => {
+      let res = await api({
+        method: "GET",
+
+      });
+      if (res.data.hits.length > 10) {
+        dataRecipie.value = res.data.hits.slice(0, 2);
+        console.log('res1', dataRecipie.value);
+      } else {
+        dataRecipie.value = res.data.hits;
+        console.log('res2', dataRecipie.value);
+      }
+
+    })
+
+    let showDetail = (data) => {
+      detailRecipie.value = data
+      show.value = !show.value
+
+    }
+
+
+
     let showListCategorie = () => {
       router.push({
         path: "/CategoriesRecette",
       });
     };
     return {
-      info,
+      dataRecipie,
       show,
-      handlePan,
+      detailRecipie,
+      showDetail,
       showListCategorie,
     };
   },
