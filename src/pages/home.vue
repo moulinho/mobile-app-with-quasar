@@ -15,7 +15,8 @@
 import { defineComponent, ref, onMounted } from "vue";
 import recetteDuJours from "src/components/recettes/recetteDuJours.vue";
 import coktailDuJour from "src/components/coktails/coktailDuJour.vue";
-import { api } from "src/boot/axios";
+import { api, api2 } from "src/boot/axios";
+import axios from "axios";
 export default defineComponent({
   components: {
     recetteDuJours,
@@ -37,6 +38,9 @@ export default defineComponent({
         PictureSlide.value = res.data.hits;
         console.log('PictureSlide2', PictureSlide.value);
       }
+
+
+
     });
 
 

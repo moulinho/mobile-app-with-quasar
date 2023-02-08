@@ -1,13 +1,7 @@
 <template>
   <div class="column q-my-md items-center">
     <span class="text-h5">Coktails du jours</span>
-    <q-separator
-      spaced
-      inset
-      size="5px"
-      class="rounded-borders q-ma-none"
-      style="width: 25%"
-    />
+    <q-separator spaced inset size="5px" class="rounded-borders q-ma-none" style="width: 25%" />
   </div>
   <div class="row no-wrap q-gutter-lg justify-center">
     <!-- <q-card
@@ -29,15 +23,11 @@
         </q-card-section>
       </q-card> -->
 
-    <div class="" v-for="n in 2" :key="n" style="width: 150px">
-      <q-img
-        src="../../assets/tangerine-newt-TN09yTRftZ8-unsplash.jpg"
-        class="rounded-borders"
-        @click="showListCategorie"
-        height="150px"
-      >
+    <div class="text-center" v-for="item in dataCocktails" :key="item.id" style="width: 150px">
+      <q-img :src="item.strDrinkThumb" class="rounded-borders" @click="showListCategorie" height="150px">
         <div class="absolute-bottom text-subtitle1 text-center">Caption</div>
       </q-img>
+      <div class="text-indigo-10">Voir details</div>
     </div>
   </div>
   <!-- <q-dialog v-model="show" seamless position="bottom" class="z-top" style="">
@@ -80,7 +70,8 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { defineComponent, ref } from "vue";
+import { api2 } from "src/boot/axios";
+import { defineComponent, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
@@ -89,28 +80,32 @@ export default defineComponent({
     const $q = useQuasar();
     let show = ref(false);
     const router = useRouter();
-    const info = ref(null);
-    let handlePan = ({ evt, ...newInfo }) => {
-      info.value = newInfo;
-      info.value.touch = show;
-      console.log("info", info.value);
-      // native Javascript event
-      console.log(evt);
-      // if (newInfo.isFirst) {
-      //   panning.value = true;
-      // } else if (newInfo.isFinal) {
-      //   panning.value = false;
-      // }
-    };
+
+    let dataCocktails = ref([]);
+    onMounted(async () => {
+      let res2 = await api2({
+        method: "GET",
+      });
+
+      if (res2.data.drinks.length > 10) {
+        dataCocktails.value = res2.data.drinks.slice(0, 2);
+        console.log('dataCocktails1', dataCocktails.value);
+      } else {
+        dataCocktails.value = res2.data.drinks;
+        console.log('dataCocktails2', dataCocktails.value);
+      }
+
+    })
+
+
     let showListCategorie = () => {
       router.push({
         path: "/CategoriesCocktail",
       });
     };
     return {
-      info,
+      dataCocktails,
       show,
-      handlePan,
       showListCategorie,
     };
   },
