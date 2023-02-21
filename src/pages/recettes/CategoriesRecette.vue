@@ -1,21 +1,11 @@
 <template>
-  <q-page
-    padding
-    class="row justify-around items-center"
-    :style="{ backgroundColor: hex }"
-  >
+  <q-page padding :style="{ backgroundColor: hex }">
     <!-- content -->
 
-    <liste-categories v-for="n in 18" :key="n" />
+    <liste-categories />
 
     <q-page-sticky position="bottom-right" :offset="fabPos">
-      <q-fab
-        icon="add"
-        direction="up"
-        color="indigo-9"
-        :disable="draggingFab"
-        v-touch-pan.prevent.mouse="moveFab"
-      >
+      <q-fab icon="add" direction="up" color="indigo-9" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
         <q-fab-action @click="onClick" :disable="draggingFab">
           <q-color v-model="hex" class="my-picker" />
         </q-fab-action>
