@@ -27,18 +27,34 @@
       </q-card-actions>
     </q-card>
   </q-dialog> -->
-    <div class="row" style="width: 300px; max-width: 100%">
-      <q-toolbar class="bg-primary text-white rounded-borders">
-        <q-btn round dense flat icon="menu" class="q-mr-xs" />
-        <q-input dark dense standout v-model="text" input-class="text-right" class="q-ml-md">
-          <template v-slot:append>
-            <q-icon v-if="text === ''" name="search" />
-            <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
-          </template>
-        </q-input>
-      </q-toolbar>
-    </div>
+    <!-- <div class="row" style="width: 300px; max-width: 100%">
+      <q-input dark dense standout v-model="text" autofocus input-class="text-right" class="q-ml-md">
+        <template v-slot:append>
+          <q-icon v-if="text === ''" name="search" />
+          <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
+        </template>
+      </q-input>
+    </div> -->
   </div>
+
+  <q-page-sticky position="bottom-right" :offset="fabPos">
+    <q-fab icon="add" direction="left" color="indigo-9" persistent :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab">
+      <q-fab-action @click="showDetailCategories" :disable="draggingFab">
+        <div class="row " style="width: 300px; max-width: 100%">
+          <q-toolbar class="bg-primary text-white rounded-borders">
+            <q-btn round dense flat icon="menu" class="q-mr-xs" />
+            <q-input dark dense standout v-model="text" input-class="text-right" class="q-ml-md z-top ">
+              <template v-slot:append>
+                <q-icon v-if="text === ''" name="search" />
+                <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
+              </template>
+            </q-input>
+          </q-toolbar>
+        </div>
+      </q-fab-action>
+    </q-fab>
+  </q-page-sticky>
 </template>
 
 <script>
@@ -54,6 +70,14 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     let dataRecipie = ref();
+
+    const fabPos = ref([18, 18]);
+    const draggingFab = ref(false);
+
+    const showDetailCategories = () => {
+
+    }
+
     const onClick = () => {
       router.push({
         path: "/DetailCategories",
@@ -79,9 +103,22 @@ export default defineComponent({
 
     });
     return {
+      text: ref(''),
       show: ref(false),
+      showDetailCategories,
       onClick,
-      dataRecipie
+      dataRecipie,
+      hex: ref(),
+      fabPos,
+      draggingFab,
+      moveFab(ev) {
+        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+
+        fabPos.value = [
+          fabPos.value[0] - ev.delta.x,
+          fabPos.value[1] - ev.delta.y,
+        ];
+      },
     };
   },
 });
