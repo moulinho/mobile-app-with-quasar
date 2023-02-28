@@ -1,27 +1,15 @@
 <template>
   <div>
     <q-card flat class="my-card no-border-radius">
-      <q-img
-        src="../../assets/pexels-maria-orlova-4969892.jpg"
-        height="200px"
-        position="0% 70%"
-      />
+      <q-img src="../../assets/pexels-maria-orlova-4969892.jpg" height="200px" position="0% 70%" />
 
       <q-card-section>
-        <q-btn
-          fab
-          color="primary"
-          icon="place"
-          class="absolute"
-          @click="myMap = !myMap"
-          style="top: 0; right: 12px; transform: translateY(-50%)"
-        />
+        <q-btn fab color="primary" icon="place" class="absolute" @click="myMap = !myMap"
+          style="top: 0; right: 12px; transform: translateY(-50%)" />
 
         <div class="row no-wrap items-center">
           <div class="col text-h6 ellipsis">Cafe Basilico</div>
-          <div
-            class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-          >
+          <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
             <q-icon name="place" />
             250 ft
           </div>
@@ -45,31 +33,14 @@
       <q-separator />
     </q-card>
   </div>
-  <q-dialog
-    v-model="myMap"
-    full-width
-    transition-show="slide-left"
-    transition-hide="slide-right"
-  >
+  <q-dialog v-model="myMap" full-width transition-show="slide-left" transition-hide="slide-right">
     <q-card>
       <q-card-section class="row justify-end q-pa-xs bg-indigo-9">
-        <q-btn
-          color="white"
-          icon="close"
-          size="sm"
-          outline
-          round
-          class=""
-          v-close-popup
-        />
+        <q-btn color="white" icon="close" size="sm" outline round class="" v-close-popup />
       </q-card-section>
       <q-card-section class="q-py-sm">
-        <q-img
-          src="../../assets/pexels-nataliya-vaitkevich-5792329.jpg"
-          class="rounded-borders"
-          height="200px"
-          position="50% 0%"
-        >
+        <q-img src="../../assets/pexels-nataliya-vaitkevich-5792329.jpg" class="rounded-borders" height="200px"
+          position="50% 0%">
           <div class="absolute-bottom text-subtitle1 text-left">
             <q-icon name="place" />
             Caption
@@ -95,16 +66,8 @@
           </q-card-section>
         </q-card-section>
         <q-card-section class="col-4">
-          <q-img
-            src="../../assets/pexels-maria-orlova-4969892.jpg"
-            spinner-color="primary"
-            spinner-size="82px"
-            fit="cover"
-            width="100%"
-            height="90px"
-            class="rounded-borders"
-            position="0% 80%"
-          />
+          <q-img src="../../assets/pexels-maria-orlova-4969892.jpg" spinner-color="primary" spinner-size="82px"
+            fit="cover" width="100%" height="90px" class="rounded-borders" position="0% 80%" />
         </q-card-section>
       </q-card-section>
     </q-card>
@@ -112,7 +75,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+import { useRoute } from 'vue-router';
 import listeDetailCategories from "src/components/recettes/listeDetailCategories.vue";
 
 export default defineComponent({
@@ -120,6 +84,11 @@ export default defineComponent({
     listeDetailCategories,
   },
   setup() {
+    const router = useRoute();
+    // console.log(route);
+    onMounted(() => {
+      console.log(router);
+    })
     return {
       myMap: ref(false),
     };

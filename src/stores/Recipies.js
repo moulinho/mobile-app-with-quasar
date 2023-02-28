@@ -12,7 +12,7 @@ export const useCounterStore = defineStore("recipies", {
   getters: {
     getRecipies: (state) => state.recipies,
     getRecipie: (state) => {
-      gsate.recipie;
+      state.recipie;
     },
   },
 

@@ -24,14 +24,14 @@ const routes = [
       },
       {
         path: "/DetailCategories",
-        name: "Détails categories",
+        name: "DetailCategories",
         component: () => import("pages/recettes/detailCategories.vue"),
       },
-      {
-        path: "/DetailCategories",
-        name: "Détails categories",
-        component: () => import("pages/recettes/detailCategories.vue"),
-      },
+      // {
+      //   path: "/DetailCategories",
+      //   name: "Détails categories",
+      //   component: () => import("pages/recettes/detailCategories.vue"),
+      // },
     ],
   },
 
