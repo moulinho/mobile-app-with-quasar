@@ -3,3 +3,8 @@
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
+
+.q-page-sticky--shrink>div {
+  display: flex;
+  align-items: center;
+}

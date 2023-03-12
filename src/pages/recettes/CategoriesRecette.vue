@@ -13,20 +13,21 @@
   <q-page-sticky position="bottom-right" :offset="fabPos">
     <!-- <div class="row"> -->
 
-    <q-fab icon="add" direction="left" color="indigo-9" persistent :disable="draggingFab"
+
+    <transition enter-active-class="animate__animated animate__slideInRight"
+      leave-active-class="animate__animated animate__slideOutRight">
+      <span v-if="displayed" style=" max-width: 100%" class="">
+        <q-input dark dense standout v-model="text" input-class="text-right" class="rounded-borders bg-indigo-9 z-top ">
+          <template v-slot:append>
+            <q-icon v-if="text === ''" name="search" />
+            <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
+          </template>
+        </q-input>
+      </span>
+    </transition>
+    <q-fab class="q-ml-sm" icon="add" direction="left" color="indigo-9" persistent :disable="draggingFab"
       v-touch-pan.prevent.mouse="moveFab" @click="showDetailCategories">
 
-      <transition enter-active-class="animate__animated animate__slideInRight"
-        leave-active-class="animate__animated animate__slideOutRight">
-        <span v-if="displayed" style="width: 300px; max-width: 100%">
-          <q-input dark dense standout v-model="text" input-class="text-right" class="q-ml-md z-top ">
-            <template v-slot:append>
-              <q-icon v-if="text === ''" name="search" />
-              <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
-            </template>
-          </q-input>
-        </span>
-      </transition>
     </q-fab>
     <!-- </div> -->
   </q-page-sticky>
