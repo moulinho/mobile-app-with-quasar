@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import axios, { api } from "src/boot/axios";
 
 export const useCounterStore = defineStore("recipies", {
   app_ID: "af439960",
@@ -7,6 +8,7 @@ export const useCounterStore = defineStore("recipies", {
     recipies: [],
     recipie: [],
     // baseUrl: `https://api.edamam.com/api/recipes/v2?type=public&q=salad&app_id=${this.app_ID}&app_key=${this.app_key}`,
+    baseUrl: "http://127.0.0.1:5500/src/stores/daba.json",
   }),
 
   getters: {
@@ -17,12 +19,27 @@ export const useCounterStore = defineStore("recipies", {
   },
 
   actions: {
+    //     fetch(api)
+    //         .then((response) => response.json())
+    //         .then(({ data }) => (this.adps = data))
+    //         .catch((error) => console.log(error));
+    //         const store = useCatDogStore();
+
+    // const dogs = ref(store.catsAsDogs.map(c => ({...c})));
     async fetchAllRecipies() {
-      this.Recipies = [];
-      const { data: recipies } = useFetch(this.baseUrl, {
-        key: `recipies`,
+      this.recipie = [];
+      let res = await api({
+        url: this.baseUrl,
+        method: "GET",
       });
-      this.recipies = recipies;
+      const recipies = res.data.posts;
+      console.log("res", recipies);
+      return (this.recipies = recipies);
+
+      // fetch(this.baseUrl)
+      //   .then((data) => data.json())
+      //   .then((result) => (this.recipies = result));
+      // console.log("recipies", this.recipies);
     },
   },
 });

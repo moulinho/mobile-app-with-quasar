@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    namespace 'org.capacitor.quasar.app'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "org.capacitor.quasar.app"

@@ -4,8 +4,8 @@
     <q-separator spaced inset size="5px" class="rounded-borders q-ma-none" style="width: 25%" />
   </div>
 
-  <div class="text-center text-h6 text-indigo-10 q-my-md" @click="showListCategorie"
-    style="text-decoration: underline;">Voir Plus</div>
+  <div class="text-center text-h6 text-indigo-10 q-my-md" @click="showListCategorie" style="text-decoration: underline;">
+    Voir Plus</div>
   <div class="row no-wrap q-gutter-lg justify-center">
     <div class="text-center" v-for="item in dataRecipie" :key="item.id" @click="showDetail(item)" style="width: 150px">
       <q-img :src="item.recipe.image" class="rounded-borders" height="150px">
@@ -19,7 +19,6 @@
       </q-dialog>
     </div>
   </div>
-
 </template>
 
 <script>

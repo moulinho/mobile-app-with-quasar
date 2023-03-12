@@ -11,22 +11,24 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos">
+    <!-- <div class="row"> -->
+
     <q-fab icon="add" direction="left" color="indigo-9" persistent :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab">
-      <q-fab-action @click="showDetailCategories" :disable="draggingFab">
-        <div class="row " style="width: 300px; max-width: 100%">
-          <q-toolbar class="bg-primary text-white rounded-borders">
-            <q-btn round dense flat icon="menu" class="q-mr-xs" />
-            <q-input dark dense standout v-model="text" input-class="text-right" class="q-ml-md z-top ">
-              <template v-slot:append>
-                <q-icon v-if="text === ''" name="search" />
-                <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
-              </template>
-            </q-input>
-          </q-toolbar>
-        </div>
-      </q-fab-action>
+      v-touch-pan.prevent.mouse="moveFab" @click="showDetailCategories">
+
+      <transition enter-active-class="animate__animated animate__slideInRight"
+        leave-active-class="animate__animated animate__slideOutRight">
+        <span v-if="displayed" style="width: 300px; max-width: 100%">
+          <q-input dark dense standout v-model="text" input-class="text-right" class="q-ml-md z-top ">
+            <template v-slot:append>
+              <q-icon v-if="text === ''" name="search" />
+              <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
+            </template>
+          </q-input>
+        </span>
+      </transition>
     </q-fab>
+    <!-- </div> -->
   </q-page-sticky>
 </template>
 
@@ -46,9 +48,10 @@ export default defineComponent({
 
     const fabPos = ref([18, 18]);
     const draggingFab = ref(false);
+    const displayed = ref(false)
 
     const showDetailCategories = () => {
-
+      displayed.value = !displayed.value
     }
 
     const onClick = (item) => {
@@ -85,6 +88,7 @@ export default defineComponent({
     return {
       text: ref(''),
       show: ref(false),
+      displayed,
       showDetailCategories,
       onClick,
       dataRecipie,
