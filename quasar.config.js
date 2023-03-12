@@ -68,7 +68,11 @@ module.exports = configure(function (ctx) {
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       env: {
         // You have to manually define all the variables you want to pass in
-        env: require("dotenv").config().parsed,
+        // console.log('APP_ID_1', process.env.APP_ID_1)
+
+        APP_ID_1: process.env.APP_ID_1,
+        APP_KEY_1: process.env.APP_KEY_1,
+
         // ...
       },
       chainWebpack(chain) {

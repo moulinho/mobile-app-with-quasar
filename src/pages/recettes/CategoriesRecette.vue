@@ -35,7 +35,7 @@
 
 <script>
 import { api } from "src/boot/axios";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 
 // import detailCategories from "src/components/detailCategories.vue";
@@ -44,29 +44,30 @@ export default defineComponent({
     // detailCategories,
   },
   setup() {
+    // APP_KEY_1
+    const APP_ID_1 = process.env.APP_ID_1;
+    const APP_KEY_1 = process.env.APP_KEY_1;
+    // console.log('APP_ID_1', process.env.APP_ID_1)
+    // console.log('APP_KEY_1', process.env.APP_KEY_1)
+    let searchQuery = 'salad'
     const router = useRouter();
     let dataRecipie = ref();
+    let dataRecipieFilte = ref()
 
     const fabPos = ref([18, 18]);
     const draggingFab = ref(false);
     const displayed = ref(false)
+    let text = ref('');
+
+    text.value !== '' ? text.value : text.value = searchQuery;
+
+    // const baseUrl = `https://api.edamam.com/api/recipes/v2?type=public&q=${text.value}&app_id=${APP_ID_1}&app_key=${APP_KEY_1}`;
 
     const showDetailCategories = () => {
       displayed.value = !displayed.value
     }
 
-    const onClick = (item) => {
-      console.log('azazaz', item);
-      router.push({
-        name: "DetailCategories",
-        params: {
-          calories: item.calories,
-          cuisineType: item.cuisineType,
-          dietLabels: item.dietLabels
-        }
 
-      });
-    };
 
     onMounted(async () => {
       let res = await api({
@@ -86,8 +87,44 @@ export default defineComponent({
 
 
     });
+
+
+    watchEffect(async () => {
+      // console.log('text.value', text.value);
+      if (text.value.length > 4) {
+        let resSearch = await api({
+          url: `https://api.edamam.com/api/recipes/v2?type=public&q=${text.value}&app_id=${APP_ID_1}&app_key=${APP_KEY_1}`,
+          method: "GET",
+
+        });
+        dataRecipieFilte.value = resSearch.data.hits
+      }
+
+      // console.log("resSearch", dataRecipieFilte.value);
+      text.value !== '' && text.value.length > 4 ? dataRecipie.value = dataRecipieFilte.value : dataRecipie.value
+
+    })
+
+    const onClick = (item) => {
+      console.log('azazaz', item);
+      router.push({
+        name: "DetailCategories",
+        params: {
+          calories: item.calories,
+          cuisineType: item.cuisineType,
+          dietLabels: item.dietLabels
+        }
+
+      });
+    };
+
+
+    // console.log("resSearch", dataRecipieFilte.value);
+
+
     return {
-      text: ref(''),
+      dataRecipieFilte,
+      text,
       show: ref(false),
       displayed,
       showDetailCategories,
